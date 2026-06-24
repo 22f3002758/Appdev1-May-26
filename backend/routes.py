@@ -1,7 +1,8 @@
 from flask import current_app as app
 from flask import render_template, redirect,request
-from backend.models import *
+from .models import *
 from datetime import datetime
+from flask_login import login_user,login_required
 
 @app.route('/')
 def home():
@@ -46,6 +47,44 @@ def register():
         return redirect("/login")
     
 
-@app.route('/')
+@app.route('/login', methods=['GET','POST'])
 def login():
-    return render_template("login.html")      
+    if request.method=="GET":
+        return render_template("login.html")
+    if request.method=="POST":
+        femail=request.form.get("email")
+        fpwd=request.form.get("pwd")
+        user=db.session.query(Professional).filter_by(email=femail).first() or \
+        db.session.query(Customer).filter_by(email=femail).first() or\
+        db.session.query(Admin).filter_by(email=femail).first() 
+        if user:
+            if user.password==fpwd:
+                if isinstance(user,Professional):
+                    login_user(user)
+                    return redirect("professional/dashboard")
+                elif isinstance(user,Customer):
+                    login_user(user)
+                    return redirect("customer/dashboard")
+                elif isinstance(user,Admin):
+                    login_user(user)
+                    return redirect("admin/dashboard")
+            else:
+                return "Check your credentials"
+        else:
+            return "User not found"    
+                
+    
+@app.route('/admin/dashboard', methods=['GET','POST'])
+@login_required
+def admin_dashboard():
+    return "Welcome to Admin dashboard"
+
+@app.route('/customer/dashboard', methods=['GET','POST'])
+@login_required
+def cust_dashboard():
+    return "Welcome to Customer dashboard"
+
+@app.route('/professional/dashboard', methods=['GET','POST'])
+@login_required
+def prof_dashboard():
+    return "Welcome to professional dashboard"   
