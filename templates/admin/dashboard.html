@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Homeease</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto ">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Search</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-person-circle fs-4"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">profile</a></li>
+                            <li><a class="dropdown-item" href="#">logout</a></li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="card-body">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-active-profs-tab" data-bs-toggle="tab"
+                    data-bs-target="#pills-active-profs" type="button" role="tab" aria-controls="home-tab-pane"
+                    aria-selected="true">Active</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-registered-profs-tab" data-bs-toggle="tab"
+                    data-bs-target="#pills-registered-profs" type="button" role="tab" aria-controls="profile-tab-pane"
+                    aria-selected="false">Requested</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-flagged-profs-tab" data-bs-toggle="tab"
+                    data-bs-target="#pills-flagged-profs" type="button" role="tab" aria-controls="contact-tab-pane"
+                    aria-selected="false">Flag</button>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="pills-active-profs" role="tabpanel" aria-labelledby="home-tab"
+                tabindex="0">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Experience</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto@gmail</td>
+                            <td>3</td>
+                            <td><button type="button" class="btn btn-primary">Flag</button></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="pills-registered-profs" role="tabpanel" aria-labelledby="profile-tab"
+                tabindex="0">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Experience</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto@gmail</td>
+                            <td>3</td>
+                            <td><button type="button" class="btn btn-primary">Accept/Reject</button></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="pills-flagged-profs" role="tabpanel" aria-labelledby="contact-tab"
+                tabindex="0">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Experience</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto@gmail</td>
+                            <td>3</td>
+                            <td><button type="button" class="btn btn-primary">UnFlag</button></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div class="card-body">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-active-profs-tab" data-bs-toggle="tab"
+                    data-bs-target="#pills-active-profs" type="button" role="tab" aria-controls="home-tab-pane"
+                    aria-selected="true">Active</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-registered-profs-tab" data-bs-toggle="tab"
+                    data-bs-target="#pills-registered-profs" type="button" role="tab"
+                    aria-controls="profile-tab-pane" aria-selected="false">Requested</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-flagged-profs-tab" data-bs-toggle="tab"
+                    data-bs-target="#pills-flagged-profs" type="button" role="tab" aria-controls="contact-tab-pane"
+                    aria-selected="false">Flag</button>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="pills-active-profs" role="tabpanel"
+                aria-labelledby="home-tab" tabindex="0">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Experience</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto@gmail</td>
+                            <td>3</td>
+                            <td><button type="button" class="btn btn-primary">Flag</button></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="pills-registered-profs" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Experience</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto@gmail</td>
+                            <td>3</td>
+                            <td><button type="button" class="btn btn-primary">Accept/Reject</button></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="pills-flagged-profs" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+            <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Experience</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto@gmail</td>
+                            <td>3</td>
+                            <td><button type="button" class="btn btn-primary">UnFlag</button></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
