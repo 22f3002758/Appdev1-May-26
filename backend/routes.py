@@ -24,7 +24,7 @@ def register():
         if cust:
             return "Customer already exist!"
         else:
-            newcust=Customer(name=fname,email=femail,password=fpwd,address=faddress,mobile=fmobile,status='active')
+            newcust=Customer(name=fname,email=femail,password=fpwd,address=faddress,mobile=fmobile,status='Active')
             db.session.add(newcust)
             db.session.commit()
         return redirect("/login")
@@ -41,7 +41,7 @@ def register():
             return "Professional already exist!"
         else:
             # resume.save(f"static/{email}.pdf")
-            newprof=Professional(name=fname,email=femail,password=fpwd,address=faddress,mobile=fmobile,experience=fexp,status='pending',resume_url="#")
+            newprof=Professional(name=fname,email=femail,password=fpwd,address=faddress,mobile=fmobile,experience=fexp,status='Registered',resume_url="#")
             db.session.add(newprof)
             db.session.commit()
         return redirect("/login")
@@ -77,7 +77,52 @@ def login():
 @app.route('/admin/dashboard', methods=['GET','POST'])
 @login_required
 def admin_dashboard():
-    return "Welcome to Admin dashboard"
+    profs=db.session.query(Professional).all()
+    customers=db.session.query(Customer).all()
+    return render_template("admin/dashboard.html", profs=profs, customers=customers)
+
+@app.route("/admin/professional/<string:action>/<int:prof_id>")
+def approve_professional(action,prof_id):
+    prof=db.session.query(Professional).filter_by(id=prof_id).first()
+    if prof:
+        if action=="Accept" and prof.status=="Registered":
+            prof.status='Active'
+            db.session.commit()
+        elif action=="Reject" and prof.status=="Registered":
+            prof.status='Rejected'
+            db.session.commit()
+        elif action=="Flag" and prof.status=="Active":
+            prof.status='Flagged'
+            for package in prof.packages:
+                package.status="Inactive"
+            db.session.commit()
+        elif action=="Unflag" and prof.status=="Flagged":
+            prof.status='Active'
+            for package in prof.packages:
+                package.status="Active"
+            db.session.commit() 
+        else:
+            return "Invalid action or status"
+    else:
+        return "Professional not found."  
+    return redirect("/admin/dashboard")   
+
+@app.route("/admin/customer/<string:action>/<int:cust_id>")
+def approve_customer(action,cust_id):
+    cust=db.session.query(Customer).filter_by(id=cust_id).first()   
+    if cust:
+        if action=='Flag' and cust.status=='Active':
+            cust.status='Flagged'
+            db.session.commit()
+        elif action=="Unflag" and cust.status=='Flagged':
+            cust.status='Active'
+            db.session.commit()
+        else:  
+            return "Invalid action or status"   
+    else:
+        return "Professional not found."  
+    return redirect("/admin/dashboard")      
+
 
 @app.route('/customer/dashboard', methods=['GET','POST'])
 @login_required

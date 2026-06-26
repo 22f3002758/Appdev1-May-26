@@ -78,14 +78,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for prof in profs %}
+                        {% if prof.status=="Active" %}
                         <tr>
                             <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto@gmail</td>
-                            <td>3</td>
-                            <td><button type="button" class="btn btn-primary">Flag</button></td>
+                            <td>{{prof.name}}</td>
+                            <td>{{prof.email}}</td>
+                            <td>{{prof.experiance}}</td>
+                            <td><a type="button" href="/admin/professional/Flag/{{prof.id}}" class="btn btn-primary">Flag</a></td>
                         </tr>
-
+                        {% endif %}
+                        {% endfor %}
+                        
                     </tbody>
                 </table>
             </div>
@@ -102,14 +106,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for prof in profs %}
+                        {% if prof.status=="Registered" %}
                         <tr>
                             <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto@gmail</td>
-                            <td>3</td>
-                            <td><button type="button" class="btn btn-primary">Accept/Reject</button></td>
+                            <td>{{prof.name}}</td>
+                            <td>{{prof.email}}</td>
+                            <td>{{prof.experiance}}</td>
+                            <td><a type="button" href="/admin/professional/Accept/{{prof.id}}" class="btn btn-primary">Accept</a>
+                                <a type="button" href="/admin/professional/Reject/{{prof.id}}" class="btn btn-primary">Reject</a>
+                            </td>
                         </tr>
-
+                        {% endif %}
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -126,14 +135,17 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for prof in profs %}
+                        {% if prof.status=="Flagged" %}
                         <tr>
                             <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto@gmail</td>
-                            <td>3</td>
-                            <td><button type="button" class="btn btn-primary">UnFlag</button></td>
+                            <td>{{prof.name}}</td>
+                            <td>{{prof.email}}</td>
+                            <td>{{prof.experiance}}</td>
+                            <td><a type="button" href="/admin/professional/Unflag/{{prof.id}}" class="btn btn-primary">UnFlag</button></td>
                         </tr>
-
+                        {% endif %}
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -143,24 +155,20 @@
     <div class="card-body">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="pills-active-profs-tab" data-bs-toggle="tab"
-                    data-bs-target="#pills-active-profs" type="button" role="tab" aria-controls="home-tab-pane"
+                <button class="nav-link active" id="pills-active-cust-tab" data-bs-toggle="tab"
+                    data-bs-target="#pills-active-cust" type="button" role="tab" aria-controls="home-tab-pane"
                     aria-selected="true">Active</button>
             </li>
+            
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-registered-profs-tab" data-bs-toggle="tab"
-                    data-bs-target="#pills-registered-profs" type="button" role="tab"
-                    aria-controls="profile-tab-pane" aria-selected="false">Requested</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-flagged-profs-tab" data-bs-toggle="tab"
-                    data-bs-target="#pills-flagged-profs" type="button" role="tab" aria-controls="contact-tab-pane"
+                <button class="nav-link" id="pills-flagged-cust-tab" data-bs-toggle="tab"
+                    data-bs-target="#pills-flag-cust" type="button" role="tab" aria-controls="contact-tab-pane"
                     aria-selected="false">Flag</button>
             </li>
 
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="pills-active-profs" role="tabpanel"
+            <div class="tab-pane fade show active" id="pills-active-cust" role="tabpanel"
                 aria-labelledby="home-tab" tabindex="0">
                 <table class="table">
                     <thead>
@@ -168,68 +176,52 @@
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Experience</th>
+                            <th scope="col">mobile</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for cust in customers %}
+                        {% if cust.status == 'Active' %}
                         <tr>
                             <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto@gmail</td>
-                            <td>3</td>
-                            <td><button type="button" class="btn btn-primary">Flag</button></td>
+                            <td>{{cust.name}}</td>
+                            <td>{{cust.email}}</td>
+                            <td>{{cust.mobile}}</td>
+                            <td><a type="button" href= "/admin/customer/Flag/{{cust.id}}" class="btn btn-primary">Flag</a></td>
                         </tr>
-                        
+                        {% endif %}
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade" id="pills-registered-profs" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+            <div class="tab-pane fade" id="pills-flag-cust" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Experience</th>
+                            <th scope="col">Mobile</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for cust in customers %}
+                        {% if cust.status == 'Flagged' %}
                         <tr>
                             <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto@gmail</td>
-                            <td>3</td>
-                            <td><button type="button" class="btn btn-primary">Accept/Reject</button></td>
+                            <td>{{cust.name}}</td>
+                            <td>{{cust.email}}</td>
+                            <td>{{cust.mobile}}</td>
+                            <td><a type="button" href= "/admin/customer/Unflag/{{cust.id}}" class="btn btn-primary">Unflag</a></td>
                         </tr>
-                        
+                        {% endif %}
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade" id="pills-flagged-profs" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-            <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Experience</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto@gmail</td>
-                            <td>3</td>
-                            <td><button type="button" class="btn btn-primary">UnFlag</button></td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-            </div>
+            
 
         </div>
     </div>
