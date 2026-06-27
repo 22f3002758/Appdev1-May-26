@@ -2,7 +2,7 @@ from flask import current_app as app
 from flask import render_template, redirect,request
 from .models import *
 from datetime import datetime
-from flask_login import login_user,login_required,current_user
+from flask_login import login_user,login_required,current_user,logout_user
 
 @app.route('/')
 def home():
@@ -127,7 +127,31 @@ def approve_customer(action,cust_id):
 @app.route('/customer/dashboard', methods=['GET','POST'])
 @login_required
 def cust_dashboard():
-    return "Welcome to Customer dashboard"
+    packs=db.session.query(Package).filter_by(status="Active").all()
+    packages=[]
+    for pack in packs:
+        if pack.start_date<=datetime.now().date()<=pack.end_date:
+            packages.append(pack)
+
+    bookings=current_user.bookings
+    return render_template("customer/dashboard.html",packages=packages, bookings=bookings)
+
+@app.route('/customer/book/<int:pack_id>', methods=['GET','POST'])
+@login_required
+def book_package(pack_id):
+     pack=db.session.query(Package).filter_by(id=pack_id).first()
+     date=request.form.get("date")
+     time=request.form.get("time")
+     if pack and pack.status=='Active':
+        if pack.start_date<=datetime.strptime(date,"%Y-%m-%d").date()<=pack.end_date:
+            new_booking=Booking(cust_id=current_user.id,pack_id=pack.id,prof_id=pack.prof_id,status="Requested",date=datetime.strptime(date,"%Y-%m-%d").date(),
+                                start_time=datetime.strptime(time,"%H:%M").time(),total_price=0)
+            db.session.add(new_booking)
+            db.session.commit()
+        return redirect("/customer/dashboard")
+     else:
+         return "Package not available. "    
+
 
 @app.route('/professional/dashboard', methods=['GET','POST'])
 @login_required
@@ -183,3 +207,22 @@ def delete_pack(pack_id):
         db.session.delete(pack)
         db.session.commit()
         return redirect("/professional/dashboard")  
+
+@app.route('/professional/<string:action>/<int:booking_id>', methods=['GET','POST'])
+@login_required
+def Prof_booking(action,booking_id):
+    booking=db.session.query(Booking).filter_by(id=booking_id).first() 
+    if booking:
+        if action=="Accept" and booking.status=="Requested":
+            booking.status="Accepted"
+        elif action=="Reject" and booking.status=="Requested":
+            booking.status="Rejected"
+        db.session.commit()
+    return redirect("/professional/dashboard")  
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect("/login")
+    

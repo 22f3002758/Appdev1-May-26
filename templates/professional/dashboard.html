@@ -34,7 +34,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">profile</a></li>
-                            <li><a class="dropdown-item" href="#">logout</a></li>
+                            <li><a class="dropdown-item" href="/logout">logout</a></li>
 
                         </ul>
                     </li>
@@ -46,7 +46,7 @@
     </nav>
     <div class="card" ms-3 me-3 mt-3">
         <div class="card-header">
-            <div class="'d-flex d-inline">
+            <div class="d-flex d-inline">
                 <h4>Packages</h4>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal"
@@ -277,8 +277,8 @@
                                 <td>{{booking.date}}</td>
                                 <td>{{booking.time}}</td>
                                 <td>{{booking.status}}</td>
-                                <td><a type="button" href="" class="btn btn-primary">Accept</a>
-                                    <a type="button" href="" class="btn btn-primary">Reject</a>
+                                <td><a type="button" href="/professional/Accept/{{booking.id}}" class="btn btn-primary">Accept</a>
+                                    <a type="button" href="/professional/Reject/{{booking.id}}" class="btn btn-primary">Reject</a>
                                 </td>
 
                             </tr>
@@ -306,7 +306,7 @@
                         </thead>
                         <tbody>
                             {% for booking in bookings %}
-                            {% if booking.status=="Accepted" %}
+                            {% if booking.status=="Rejected" %}
                             <tr>
                                 <th scope="row">1</th>
                                 <td>{{booking.package.title}}</td>
