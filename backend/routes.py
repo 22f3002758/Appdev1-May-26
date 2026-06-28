@@ -3,6 +3,7 @@ from flask import render_template, redirect,request
 from .models import *
 from datetime import datetime
 from flask_login import login_user,login_required,current_user,logout_user
+from sqlalchemy import or_
 
 @app.route('/')
 def home():
@@ -40,8 +41,8 @@ def register():
         if prof:
             return "Professional already exist!"
         else:
-            # resume.save(f"static/{email}.pdf")
-            newprof=Professional(name=fname,email=femail,password=fpwd,address=faddress,mobile=fmobile,experience=fexp,status='Registered',resume_url="#")
+            resume.save(f"static/{femail}.pdf")
+            newprof=Professional(name=fname,email=femail,password=fpwd,address=faddress,mobile=fmobile,experiance=fexp,status='Registered',resume_url=f"static/{femail}.pdf")
             db.session.add(newprof)
             db.session.commit()
         return redirect("/login")
@@ -80,6 +81,13 @@ def admin_dashboard():
     profs=db.session.query(Professional).all()
     customers=db.session.query(Customer).all()
     return render_template("admin/dashboard.html", profs=profs, customers=customers)
+
+@app.route('/admin/viewprofessional/<int:prof_id>', methods=['GET','POST'])
+@login_required
+def viewprof(prof_id):
+    packages=db.session.query(Package).filter_by(prof_id=prof_id).all()
+    bookings=db.session.query(Booking).filter_by(prof_id=prof_id).all()
+    return render_template("admin/viewprofessional.html", packages=packages, bookings=bookings)
 
 @app.route("/admin/professional/<string:action>/<int:prof_id>")
 def approve_professional(action,prof_id):
@@ -121,7 +129,22 @@ def approve_customer(action,cust_id):
             return "Invalid action or status"   
     else:
         return "Professional not found."  
-    return redirect("/admin/dashboard")      
+    return redirect("/admin/dashboard")     
+
+
+@app.route("/admin/search", methods=["GET","POST"])
+def search_admin():
+    if request.method=="GET":
+        return render_template("admin/search.html")
+    elif request.method=="POST":
+        qtype=request.form.get("query_type")
+        squery=request.form.get("query")
+        if qtype=="customer":
+            custs=db.session.query(Customer).filter(or_(Customer.name.contains(squery),Customer.email.contains(squery))).all()
+            return render_template("/admin/search.html",customers=custs,query_type=qtype)
+        if qtype=="professional":
+            profs=db.session.query(Professional).filter(or_(Professional.name.contains(squery),Professional.email.contains(squery))).all()
+            return render_template("/admin/search.html",professionals=profs,query_type=qtype)
 
 
 @app.route('/customer/dashboard', methods=['GET','POST'])
@@ -134,7 +157,7 @@ def cust_dashboard():
             packages.append(pack)
 
     bookings=current_user.bookings
-    return render_template("customer/dashboard.html",packages=packages, bookings=bookings)
+    return render_template("customer/dashboard.html",packages=packages, bookings=bookings, cu=current_user)
 
 @app.route('/customer/book/<int:pack_id>', methods=['GET','POST'])
 @login_required
@@ -158,7 +181,7 @@ def book_package(pack_id):
 def prof_dashboard():
     packages=db.session.query(Package).filter_by(prof_id=current_user.id).all()
     bookings=current_user.bookings
-    return render_template("professional/dashboard.html",packages=packages, bookings=bookings)  
+    return render_template("professional/dashboard.html",packages=packages, bookings=bookings, cu=current_user)  
 
 @app.route('/professional/add_package', methods=['GET','POST'])
 @login_required

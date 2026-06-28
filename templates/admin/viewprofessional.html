@@ -11,20 +11,7 @@
 </head>
 
 <body>
-    {% if cu.status=="Registered" %}
-    <div class="alert alert-warning" role="alert">
-        Request is pending from admin's approval!
-    </div>
-    {% elif cu.status=="Rejected" %}
-    <div class="alert alert-danger" role="alert">
-        Your Request has been disapproved!
-    </div>
-    {% elif cu.status=="Flagged" %}
-    <div class="alert alert-danger" role="alert">
-        You have been Flagged!
-    </div>
 
-    {% elif cu.status=="Active" %}
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Homeease</a>
@@ -58,151 +45,42 @@
             </div>
         </div>
     </nav>
-    <div class="card" ms-3 me-3 mt-3">
+    <div class="card ms-3 me-3 mt-3">
         <div class="card-header">
             <div class="d-flex d-inline">
                 <h4>Packages</h4>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">
-                    Add Package
-                </button>
 
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="POST" action="/professional/add_package">
-                                    <div class="mb-3">
-                                        <label for="exampleInputtitle" class="form-label">Title</label>
-                                        <input type="text" class="form-control" id="exampleInputtitle"
-                                            aria-describedby="emailHelp" required name="title">
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for package in packages %}
+                <div class="col-3">
+                    <div class="card" style="width: 18rem;">
 
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputdesc" class="form-label">Description</label>
-                                        <input type="text" class="form-control" id="exampleInputdesc"
-                                            aria-describedby="emailHelp" required name="description">
-
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInput" clapricess="form-label">Price</label>
-                                        <input type="text" class="form-control" id="exampleInputprice"
-                                            aria-describedby="emailHelp" required name="price">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputsd" class="form-label">Start date</label>
-                                        <input type="date" class="form-control" id="exampleInputsd"
-                                            aria-describedby="emailHelp" required name="start_date">
-
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="exampleInputed" class="form-label">End date</label>
-                                        <input type="date" class="form-control" id="exampleInputed"
-                                            aria-describedby="emailHelp" required name="end_date">
-
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </form>
-                            </div>
-
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{package.title}}</h5>
+                            <p class="card-text"><strong>Description:</strong>{{package.description}}</p>
+                            <p class="card-text"><strong>Price:</strong>{{package.price}}</p>
+                            <p class="card-text"><strong>Start Date:</strong>{{package.start_date}}</p>
+                            <p class="card-text"><strong>End Date:</strong>{{package.end_date}}</p>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
+
         </div>
     </div>
-    <div class="card-body">
-        <div class="row">
-            {% for package in packages %}
-            <div class="col-3">
-                <div class="card" style="width: 18rem;">
 
-                    <div class="card-body">
-                        <h5 class="card-title text-center">{{package.title}}</h5>
-                        <p class="card-text"><strong>Description:</strong>{{package.description}}</p>
-                        <p class="card-text"><strong>Price:</strong>{{package.price}}</p>
-                        <p class="card-text"><strong>Start Date:</strong>{{package.start_date}}</p>
-                        <p class="card-text"><strong>End Date:</strong>{{package.end_date}}</p>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#editpack{{package.id}}">
-                            <i class="bi bi-pen"></i>
-                        </button>
+    </div>
+    <div>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="editpack{{package.id}}" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form method="POST" action="/professional/edit_package/{{package.id}}">
-                                            <div class="mb-3">
-                                                <label for="exampleInputtitle" class="form-label">Title</label>
-                                                <input type="text" class="form-control" id="exampleInputtitle"
-                                                    aria-describedby="emailHelp" required name="title"
-                                                    value="{{package.title}}">
-
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="exampleInputdesc" class="form-label">Description</label>
-                                                <input type="text" class="form-control" id="exampleInputdesc"
-                                                    aria-describedby="emailHelp" required name="description"
-                                                    value="{{package.description}}">
-
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="exampleInput" clapricess="form-label">Price</label>
-                                                <input type="text" class="form-control" id="exampleInputprice"
-                                                    aria-describedby="emailHelp" required name="price"
-                                                    value="{{package.price}}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="exampleInputsd" class="form-label">Start date</label>
-                                                <input type="date" class="form-control" id="exampleInputsd"
-                                                    aria-describedby="emailHelp" required name="start_date"
-                                                    value="{{package.start_date}}">
-
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="exampleInputed" class="form-label">End date</label>
-                                                <input type="date" class="form-control" id="exampleInputed"
-                                                    aria-describedby="emailHelp" required name="end_date"
-                                                    value="{{package.end_date}}">
-
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <a type="button" href="/professional/delete/{{package.id}}" class="btn btn-primary"><i
-                                class="bi bi-trash"></i></a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+    </div>
+    <div class="card ms-3 me-3 mb-3 mt-3">
+        <div class="card-header">
+            Bookings
         </div>
-
-    </div>
-    </div>
-    <div class="card" ms-3 me-3 mb-3 mt-3">
-
         <div class="card-body">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -291,8 +169,10 @@
                                 <td>{{booking.date}}</td>
                                 <td>{{booking.time}}</td>
                                 <td>{{booking.status}}</td>
-                                <td><a type="button" href="/professional/Accept/{{booking.id}}" class="btn btn-primary">Accept</a>
-                                    <a type="button" href="/professional/Reject/{{booking.id}}" class="btn btn-primary">Reject</a>
+                                <td><a type="button" href="/professional/Accept/{{booking.id}}"
+                                        class="btn btn-primary">Accept</a>
+                                    <a type="button" href="/professional/Reject/{{booking.id}}"
+                                        class="btn btn-primary">Reject</a>
                                 </td>
 
                             </tr>
@@ -347,7 +227,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-    {% endif %}    
+
 </body>
 
 </html>

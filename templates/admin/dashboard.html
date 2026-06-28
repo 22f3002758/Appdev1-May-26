@@ -25,7 +25,7 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Search</a>
+                        <a class="nav-link" href="/admin/search">Search</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -34,7 +34,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">profile</a></li>
-                            <li><a class="dropdown-item" href="#">logout</a></li>
+                            <li><a class="dropdown-item" href="/logout">logout</a></li>
 
                         </ul>
                     </li>
@@ -85,7 +85,12 @@
                             <td>{{prof.name}}</td>
                             <td>{{prof.email}}</td>
                             <td>{{prof.experiance}}</td>
-                            <td><a type="button" href="/admin/professional/Flag/{{prof.id}}" class="btn btn-primary">Flag</a></td>
+                            <td><a type="button" href="/admin/professional/Flag/{{prof.id}}" class="btn btn-primary">Flag</a>
+                                <a type="button" href="/static/{{prof.email}}.pdf" class="btn btn-primary">View Resume</a>
+                                <a type="button" href="/admin/viewprofessional/{{prof.id}}" class="btn btn-primary">View Details</a>
+                            
+                            </td>
+
                         </tr>
                         {% endif %}
                         {% endfor %}
@@ -115,6 +120,7 @@
                             <td>{{prof.experiance}}</td>
                             <td><a type="button" href="/admin/professional/Accept/{{prof.id}}" class="btn btn-primary">Accept</a>
                                 <a type="button" href="/admin/professional/Reject/{{prof.id}}" class="btn btn-primary">Reject</a>
+                                <a type="button" href="/static/{{prof.email}}.pdf" class="btn btn-primary">View Resume</a>
                             </td>
                         </tr>
                         {% endif %}
