@@ -4,6 +4,9 @@ from .models import *
 from datetime import datetime
 from flask_login import login_user,login_required,current_user,logout_user
 from sqlalchemy import or_
+import matplotlib
+import matplotlib.pyplot as plt
+matplotlib.use("agg")
 
 @app.route('/')
 def home():
@@ -242,6 +245,29 @@ def Prof_booking(action,booking_id):
             booking.status="Rejected"
         db.session.commit()
     return redirect("/professional/dashboard")  
+@app.route("/admin/statistics", methods=["GET","POST"])
+@login_required
+def statistics_admin():
+    profs=db.session.query(Professional).all()
+    status=["Active","Flagged","Registered","Rejected"]
+    status_count=[0,0,0,0]
+    for prof in profs:
+        if prof.status=="Active":
+            status_count[0]+=1
+        if prof.status=="Flagged":
+            status_count[1]+=1 
+        if prof.status=="Registered":
+            status_count[2]+=1
+        if prof.status=="Rejected":
+            status_count[3]+=1  
+    plt.bar(status,status_count)
+    plt.xlabel("Professional status")
+    plt.xlabel("Count")
+    plt.title("Professional Status Distribution")
+    plt.savefig("static/prof_status_distribution.png")  
+    plt.close()               
+    return render_template("/admin/statistics.html")
+    
 
 @app.route("/logout")
 @login_required
